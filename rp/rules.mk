@@ -17,3 +17,4 @@ COMBO_ENABLE = no
 
 SERIAL_DRIVER = vendor
 WS2812_DRIVER = vendor
+OLED_ENABLE = yes
