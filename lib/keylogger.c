@@ -1,8 +1,12 @@
+#include <stdint.h>
 #include <stdio.h>
-#include "action.h"
+#include "action_util.h"
+#include "modifiers.h"
+#include "quantum.h"
 
 char keylog_str[24] = {};
 char keylogs_str[21] = {};
+char keylogs_mods[21] = {};
 int keylogs_str_idx = 0;
 
 const char code_to_name[60] = {
@@ -19,20 +23,39 @@ void set_keylog(uint16_t keycode, keyrecord_t *record) {
     name = code_to_name[keycode];
   }
 
+  uint8_t mod_state = get_mods();
+
+  char modGui = (mod_state & MOD_MASK_GUI)? 'G' : ' ';
+  char modCtl = (mod_state & MOD_MASK_CTRL)? 'C' : ' ';
+  char modAlt = (mod_state & MOD_MASK_ALT)? 'A' : ' ';
+  char modShft = (mod_state & MOD_MASK_SHIFT)? 'S' : ' ';
+
+
   // update keylog
-  snprintf(keylog_str, sizeof(keylog_str), "%dx%d, k%2d : %c",
+  snprintf(keylog_str, sizeof(keylog_str), "%dx%d,k%2d:%c %c%c%c%c",
            record->event.key.row, record->event.key.col,
-           keycode, name);
+           keycode, name, modGui, modCtl, modAlt, modShft);
 
   // update keylogs
   if (keylogs_str_idx == sizeof(keylogs_str) - 1) {
     keylogs_str_idx = 0;
     for (int i = 0; i < sizeof(keylogs_str) - 1; i++) {
       keylogs_str[i] = ' ';
+      keylogs_mods[i] = ' ';
     }
   }
 
+  if (mod_state & MOD_MASK_GUI) {
+      keylogs_mods[keylogs_str_idx] = 0x15;
+  } else if (mod_state & MOD_MASK_CTRL)  {
+      keylogs_mods[keylogs_str_idx] = 'C';
+  } else {
+      keylogs_mods[keylogs_str_idx] = ' ';
+  }
+
+
   keylogs_str[keylogs_str_idx] = name;
+
   keylogs_str_idx++;
 }
 
@@ -42,4 +65,7 @@ const char *read_keylog(void) {
 
 const char *read_keylogs(void) {
   return keylogs_str;
+}
+const char *read_keymods(void) {
+  return keylogs_mods;
 }
