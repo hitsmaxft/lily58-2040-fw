@@ -6,6 +6,7 @@
     "usb": {
         "pid": "0xB4C2",
         "vid": "0x8D1D",
+        "no_startup_check": true,
         "device_version": "1.0.0"
     },
     "layouts": {
