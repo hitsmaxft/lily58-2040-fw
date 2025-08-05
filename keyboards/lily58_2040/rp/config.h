@@ -32,7 +32,12 @@
 #define SERIAL_PIO_USE_PIO0
 #define SERIAL_USART_TX_PIN GP1
 
-#define EE_HANDS
+/* Split detect method */
+// by eeprom  and flashing option 
+//#define EE_HANDS
+// by usb 
+
+#define MASTER_LEFT
 /* Reset. */
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP17
