@@ -33,18 +33,16 @@
 #define SERIAL_USART_TX_PIN GP1
 
 /* Split detect method */
-// by eeprom  and flashing option 
-//#define EE_HANDS
-// by usb 
+// by eeprom  and flashing option
+#define EE_HANDS
 
-#define MASTER_LEFT
 /* Reset. */
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_LED GP17
 #define RP2040_BOOTLOADER_DOUBLE_TAP_RESET_TIMEOUT 1000U
 
 // for oled display
-#define OLED_IC  OLED_IC_SSD1306
+#define OLED_IC OLED_IC_SSD1306
 
 #define OLED_CS_PIN 29
 #define OLED_DC_PIN 28
